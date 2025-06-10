@@ -3,15 +3,14 @@ package cli
 import (
 	"errors"
 	"fmt"
-	"os"
 	"strings"
 	"time"
 
-	"github.com/wiremind/kubectl-restore/pkg/logger"
-	"github.com/wiremind/kubectl-restore/pkg/plugin"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	"github.com/tj/go-spin"
+	"github.com/wiremind/kubectl-restore/pkg/logger"
+	"github.com/wiremind/kubectl-restore/pkg/plugin"
 	"k8s.io/cli-runtime/pkg/genericclioptions"
 )
 
@@ -27,7 +26,9 @@ func RootCmd() *cobra.Command {
 		SilenceErrors: true,
 		SilenceUsage:  true,
 		PreRun: func(cmd *cobra.Command, args []string) {
-			viper.BindPFlags(cmd.Flags())
+			if err := viper.BindPFlags(cmd.Flags()); err != nil {
+				panic(fmt.Errorf("failed to bind flags: %w", err))
+			}
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			log := logger.NewLogger()
@@ -74,13 +75,16 @@ func RootCmd() *cobra.Command {
 	KubernetesConfigFlags.AddFlags(cmd.Flags())
 
 	viper.SetEnvKeyReplacer(strings.NewReplacer("-", "_"))
+
+	cmd.AddCommand(databaseCmd)
+
 	return cmd
 }
 
 func InitAndExecute() {
 	if err := RootCmd().Execute(); err != nil {
 		fmt.Println(err)
-		os.Exit(1)
+		osExit(1)
 	}
 }
 
