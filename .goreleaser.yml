@@ -1,0 +1,28 @@
+project_name: kubectl-restore
+release:
+  github:
+    owner: wiremind
+    name: kubectl-restore
+builds:
+  - id: kubectl-restore
+    goos:
+    - linux
+    - windows
+    - darwin
+    goarch:
+    - amd64
+    - "386"
+    env:
+      - CGO_ENABLED=0
+      - GO111MODULE=on
+    main: cmd/plugin/main.go
+    ldflags: -s -w
+      -X github.com/wiremind/kubectl-restore/pkg/version.version=
+archives:
+  - id: kubectl-restore
+    builds:
+    - kubectl-restore
+    name_template: "{{ .ProjectName }}_{{ .Os }}_{{ .Arch }}"
+    format_overrides:
+    - goos: windows
+      format: zip

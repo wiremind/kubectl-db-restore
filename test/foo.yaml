@@ -1,0 +1,58 @@
+apiVersion: krew.googlecontainertools.github.com/v1alpha2
+kind: Plugin
+metadata:
+  name: restore
+spec:
+  version: v0.1.0
+  platforms:
+  - selector:
+      matchLabels:
+        os: linux
+        arch: amd64
+    files:
+    - from: LICENSE
+      to: .
+    - from: kubectl-restore
+      to: .
+    bin: "kubectl-restore"
+    uri: https://github.com/wiremind/kubectl-restore/releases/download/v0.1.0/kubectl-restore_linux_amd64.tar.gz
+    # 'sha256' is the sha256sum of the url (archive file) above
+    sha256: 127915f8d799d82659665ccf86cfaa7f6c1fad6271fc55b193d3dcc921108d7e
+  - selector:
+      matchLabels:
+        os: darwin
+        arch: amd64
+    bin: "kubectl-restore"
+    uri: https://github.com/wiremind/kubectl-restore/releases/download/v0.1.0/kubectl-restore_darwin_amd64.tar.gz
+    # 'sha256' is the sha256sum of the url (archive file) above
+    sha256: 127915f8d799d82659665ccf86cfaa7f6c1fad6271fc55b193d3dcc921108d7e
+    files:
+    - from: LICENSE
+      to: .
+    - from: kubectl-restore
+      to: .
+  - selector:
+      matchLabels:
+        os: windows
+        arch: amd64
+    bin: "kubectl-restore.exe"
+    uri: https://github.com/wiremind/kubectl-restore/releases/download/v0.1.0/kubectl-restore_windows_amd64.zip
+    # 'sha256' is the sha256sum of the url (archive file) above
+    sha256: 127915f8d799d82659665ccf86cfaa7f6c1fad6271fc55b193d3dcc921108d7e
+    files:
+    - from: LICENSE
+      to: .
+    - from: kubectl-restore
+      to: .
+  shortDescription: "Perform restore for databases."
+  homepage: https://github.com/wiremind/kubectl-restore
+  caveats: |
+    Usage:
+      $ kubectl restore
+
+    For additional options:
+      $ kubectl restore --help
+      or https://github.com/wiremind/kubectl-restore/blob/v0.1.0/doc/USAGE.md
+
+  description: |
+    This is a plugin that perfoms restore for databases, currently supporting clickhouse only, and going for a postgresql support soon.
