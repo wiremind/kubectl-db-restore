@@ -1,7 +1,7 @@
 apiVersion: krew.googlecontainertools.github.com/v1alpha2
 kind: Plugin
 metadata:
-  name: kubectl-restore
+  name: restore
 spec:
   version: "v0.1.0"
   platforms:
@@ -12,11 +12,11 @@ spec:
     uri: https://github.com/wiremind/kubectl-restore/releases/download/v0.1.0/kubectl-restore_linux_amd64.tar.gz
     sha256: ""
     files:
-    - from: "./kubectl-restore"
+    - from: "./restore"
       to: "."
     - from: LICENSE
       to: "."
-    bin: "kubectl-restore"
+    bin: "restore"
   - selector:
       matchLabels:
         os: darwin
@@ -24,11 +24,11 @@ spec:
     uri: https://github.com/wiremind/kubectl-restore/releases/download/v0.1.0/kubectl-restore_darwin_amd64.tar.gz
     sha256: ""
     files:
-    - from: "./kubectl-restore"
+    - from: "./restore"
       to: "."
     - from: LICENSE
       to: "."
-    bin: "kubectl-restore"
+    bin: "restore"
   - selector:
       matchLabels:
         os: windows
@@ -36,19 +36,19 @@ spec:
     uri: https://github.com/wiremind/kubectl-restore/releases/download/v0.1.0/kubectl-restore_windows_amd64.zip
     sha256: ""
     files:
-    - from: "/kubectl-restore.exe"
+    - from: "/restore.exe"
       to: "."
     - from: LICENSE
       to: "."
-    bin: "kubectl-restore.exe"
-  shortDescription: A new plugin
+    bin: "restore.exe"
+  shortDescription: "Perform restore for databases."
   homepage: https://github.com/wiremind/kubectl-restore
   caveats: |
     Usage:
-      $ kubectl kubectl-restore
+      $ kubectl restore
 
     For additional options:
-      $ kubectl kubectl-restore --help
+      $ kubectl restore --help
       or https://github.com/wiremind/kubectl-restore/blob/v0.1.0/doc/USAGE.md
 
   description: |
