@@ -10,7 +10,7 @@ spec:
         os: linux
         arch: amd64
     uri: https://github.com/wiremind/kubectl-restore/releases/download/v0.1.0/kubectl-restore_linux_amd64.tar.gz
-    sha256: ""
+    sha256: "b015cfd0dacabae7628a5601860915c03287e91b0ac52d66fa90f95dec6f03ae"
     files:
     - from: "./restore"
       to: "."
@@ -22,7 +22,7 @@ spec:
         os: darwin
         arch: amd64
     uri: https://github.com/wiremind/kubectl-restore/releases/download/v0.1.0/kubectl-restore_darwin_amd64.tar.gz
-    sha256: ""
+    sha256: "f3717b9cf01d1ad805de1653b83b210ce5284f46f4e8d8ae585a9d5b14299474"
     files:
     - from: "./restore"
       to: "."
@@ -34,7 +34,7 @@ spec:
         os: windows
         arch: amd64
     uri: https://github.com/wiremind/kubectl-restore/releases/download/v0.1.0/kubectl-restore_windows_amd64.zip
-    sha256: ""
+    sha256: "e303fa34e8bea177eca3eb2a4559b6b8b485fd70487bcc1f6095e8fe2b06ec18"
     files:
     - from: "/restore.exe"
       to: "."
@@ -52,4 +52,4 @@ spec:
       or https://github.com/wiremind/kubectl-restore/blob/v0.1.0/doc/USAGE.md
 
   description: |
-    This is a new plugin
+    This is a plugin that perfoms restore for databases, currently supporting clickhouse only, and going for a postgresql support soon.
