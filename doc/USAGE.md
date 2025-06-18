@@ -31,19 +31,6 @@ All of the above flags are required except for --namespace (which defaults to de
 Flag	Description
 --dry-run	Print the SQL query and exit
 
-### 🔐 ClickHouse Engine Requirements
-
-Make sure the following environment variables are defined on the machine running the plugin:
-
-```
-CLICKHOUSE_USER=...
-CLICKHOUSE_PASSWORD=...
-CLICKHOUSE_AWS_S3_ENDPOINT_URL_BACKUP=...
-AWS_ACCESS_KEY_ID=...
-AWS_SECRET_ACCESS_KEY=...
-```
-These values are injected into a curl request inside a Kubernetes Job that runs the actual RESTORE DATABASE SQL.
-
 🧾 Example
 
 ```

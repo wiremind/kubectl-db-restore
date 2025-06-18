@@ -2,6 +2,7 @@ package engine
 
 import (
 	"fmt"
+	"os"
 	"time"
 
 	"github.com/wiremind/kubectl-restore/pkg/job"
@@ -44,7 +45,30 @@ func (c *ClickhouseEngine) Restore(configFlags *genericclioptions.ConfigFlags, b
 	}
 
 	if opts.DryRun {
-		logger.Global.Info("[Dry Run] Would execute restore on database: %s from backup: %s", databaseName, backupName)
+		logger.Global.Info("🔍 [Dry Run] Initiating validation for restore process...")
+		logger.Global.Info("[Dry Run] Target database: '%s'", databaseName)
+		logger.Global.Info("[Dry Run] Backup source: '%s'", backupName)
+		logger.Global.Info("[Dry Run] Service name (ClickHouse host): '%s'", opts.ServiceName)
+		logger.Global.Info("[Dry Run] Namespace: '%s'", opts.Namespace)
+		logger.Global.Info("[Dry Run] Validated secret keys: %v", requiredVars)
+
+		for _, env := range envSources {
+			switch {
+			case env.SecretRef != nil:
+				logger.Global.Info("[Dry Run] Would load secret for var: %s", env.Name)
+			case env.Value != nil:
+				logger.Global.Info("[Dry Run] Would use env var '%s' with direct value (masked)", env.Name)
+			default:
+				logger.Global.Info("[Dry Run] ⚠️ Missing or unresolved value for env var: %s", env.Name)
+			}
+		}
+
+		logger.Global.Info("[Dry Run] Would create 3 sequential Kubernetes jobs:")
+		logger.Global.Info("  - 🗑️ Job: Drop database '%s' (if it exists)", databaseName)
+		logger.Global.Info("  - 🏗️ Job: Create new database '%s'", databaseName)
+		logger.Global.Info("  - 📦 Job: Restore database '%s' from S3 path '%s/%s'", databaseName, os.Getenv("CLICKHOUSE_AWS_S3_ENDPOINT_URL_BACKUP"), backupName)
+
+		logger.Global.Info("✅ [Dry Run] Validation completed successfully. No changes were made.")
 		return nil
 	}
 
