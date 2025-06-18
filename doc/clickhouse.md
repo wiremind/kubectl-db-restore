@@ -16,7 +16,7 @@ This guide explains how to restore ClickHouse databases using the `kubectl resto
 
 ---
 
-## 🔐 Environment Variables
+## 🔐 Required Variables
 
 The following **must be defined** either via environment variables **or** via `--secret-ref`:
 

@@ -35,7 +35,7 @@ kubectl restore
 
 🧠 Supported Engines
 Engine	Status
-ClickHouse	✅ Fully Supported
+[ClickHouse](doc/clickhouse.md)	✅ Fully Supported
 PostgreSQL	⚠️ Not yet implemented
 
 🚀 Example
