@@ -1,10 +1,10 @@
-project_name: kubectl-restore
+project_name: kubectl-db-restore
 release:
   github:
     owner: wiremind
-    name: kubectl-restore
+    name: kubectl-db-restore
 builds:
-  - id: kubectl-restore
+  - id: kubectl-db-restore
     goos:
     - linux
     - windows
@@ -17,11 +17,11 @@ builds:
       - GO111MODULE=on
     main: cmd/plugin/main.go
     ldflags: -s -w
-      -X github.com/wiremind/kubectl-restore/pkg/version.version=
+      -X github.com/wiremind/kubectl-db-restore/pkg/version.version=
 archives:
-  - id: kubectl-restore
+  - id: kubectl-db-restore
     builds:
-    - kubectl-restore
+    - kubectl-db-restore
     name_template: "{{ .ProjectName }}_{{ .Os }}_{{ .Arch }}"
     format_overrides:
     - goos: windows

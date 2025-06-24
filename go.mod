@@ -1,4 +1,4 @@
-module github.com/wiremind/kubectl-restore
+module github.com/wiremind/kubectl-db-restore
 
 go 1.24.0
 
