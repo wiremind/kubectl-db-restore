@@ -1,7 +1,7 @@
 apiVersion: krew.googlecontainertools.github.com/v1alpha2
 kind: Plugin
 metadata:
-  name: restore
+  name: db-restore
 spec:
   version: v0.1.0
   platforms:
@@ -17,7 +17,7 @@ spec:
     bin: "kubectl-db-restore"
     uri: https://github.com/wiremind/kubectl-db-restore/releases/download/v0.1.0/kubectl-db-restore_linux_amd64.tar.gz
     # 'sha256' is the sha256sum of the url (archive file) above
-    sha256: 4361480b47cbc0deb5ac3c91ad217ec8a5f060c8a71365a4d8474c602ac4e4f6
+    sha256: af4b4484c938b358094cb885fc688feaa51e9f2c95dbcdda2b78e473d9584350
   - selector:
       matchLabels:
         os: darwin
