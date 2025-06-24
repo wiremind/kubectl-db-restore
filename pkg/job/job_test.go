@@ -2,6 +2,7 @@ package job
 
 import (
 	"context"
+	"strings"
 	"testing"
 
 	batchv1 "k8s.io/api/batch/v1"
@@ -65,5 +66,6 @@ func TestCreateJobWithClient_Failure(t *testing.T) {
 
 	err := CreateJobWithClient(client, spec)
 	assert.Error(t, err)
-	assert.Contains(t, err.Error(), "Job failed")
+	assert.Contains(t, strings.ToLower(err.Error()), "job 'fail-job' failed")
+
 }

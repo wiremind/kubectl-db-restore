@@ -35,12 +35,16 @@ func runDatabaseRestore() error {
 		if len(parts) != 2 {
 			logger.Global.Error(fmt.Errorf("invalid --secret-ref format: %s", ref))
 			osExit(1)
+			return nil // add this for testability
 		}
+
 		secretParts := strings.SplitN(parts[1], ":", 2)
 		if len(secretParts) != 2 {
 			logger.Global.Error(fmt.Errorf("invalid secret/key in --secret-ref: %s", ref))
 			osExit(1)
+			return nil
 		}
+
 		parsedRefs = append(parsedRefs, k8screds.SecretKeyRef{
 			EnvVarName: parts[0],
 			SecretName: secretParts[0],

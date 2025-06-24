@@ -19,10 +19,6 @@ var (
 	KubernetesConfigFlags *genericclioptions.ConfigFlags
 )
 
-func shouldRunRestore() bool {
-	return engineName != "" && backupName != "" && databaseName != "" && serviceName != ""
-}
-
 func validateRestoreFlags() error {
 	missing := []string{}
 
