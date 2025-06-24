@@ -2,6 +2,7 @@ package cli
 
 import (
 	"errors"
+	"os"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -37,40 +38,34 @@ func (m *mockEngine) Restore(
 	return m.returnErr
 }
 
-// --- flag reset helper ---
-func resetFlagsAndVars() {
+// --- test helpers ---
+func resetVars() {
 	engineName = ""
 	backupName = ""
 	databaseName = ""
 	namespace = ""
 	serviceName = ""
 	dryRun = false
-
-	databaseCmd.ResetFlags()
-
-	databaseCmd.Flags().StringVar(&engineName, "engine", "", "Database engine (clickhouse, postgres, ...)")
-	databaseCmd.Flags().StringVar(&backupName, "backup-name", "", "Backup name")
-	databaseCmd.Flags().StringVar(&databaseName, "database", "", "Database name")
-	databaseCmd.Flags().StringVar(&namespace, "namespace", "default", "Kubernetes namespace")
-	databaseCmd.Flags().StringVar(&serviceName, "service-name", "", "Kubernetes service name for DB")
-	databaseCmd.Flags().BoolVar(&dryRun, "dry-run", false, "Dry run")
+	secretRefs = nil
+	KubernetesConfigFlags = genericclioptions.NewConfigFlags(false)
 }
 
 // --- tests ---
-func TestDatabaseCommand_Success(t *testing.T) {
-	resetFlagsAndVars()
+func TestRunDatabaseRestore_Success(t *testing.T) {
+	resetVars()
 	mock := &mockEngine{}
 	engine.RegisterEngine(mock)
 
-	databaseCmd.SetArgs([]string{
-		"--engine=mock",
-		"--backup-name=test-backup",
-		"--database=test-db",
-		"--namespace=test-ns",
-		"--service-name=test-svc",
-	})
+	engineName = "mock"
+	backupName = "test-backup"
+	databaseName = "test-db"
+	namespace = "test-ns"
+	serviceName = "test-svc"
+	dryRun = false
+	secretRefs = []string{}
 
-	err := databaseCmd.Execute()
+	err := runDatabaseRestore()
+
 	assert.NoError(t, err)
 	assert.True(t, mock.restoreCalled)
 	assert.Equal(t, "test-backup", mock.lastArgs.backup)
@@ -83,27 +78,49 @@ func TestDatabaseCommand_Success(t *testing.T) {
 	}, mock.lastArgs.opts)
 }
 
-func TestDatabaseCommand_RestoreFails(t *testing.T) {
-	resetFlagsAndVars()
+func TestRunDatabaseRestore_RestoreFails(t *testing.T) {
+	resetVars()
 	mock := &mockEngine{returnErr: errors.New("restore failed")}
 	engine.RegisterEngine(mock)
 
+	engineName = "mock"
+	backupName = "test-backup"
+	databaseName = "test-db"
+	serviceName = "test-svc"
+
+	// Capture osExit
 	exitCalled := false
-	oldExit := osExit
 	osExit = func(code int) {
 		exitCalled = true
 	}
-	defer func() { osExit = oldExit }()
+	defer func() { osExit = os.Exit }()
 
-	databaseCmd.SetArgs([]string{
-		"--engine=mock",
-		"--backup-name=test-backup",
-		"--database=test-db",
-		"--service-name=test-svc",
-	})
+	err := runDatabaseRestore()
+	assert.NoError(t, err)
 
-	err := databaseCmd.Execute()
-	assert.Nil(t, err)
 	assert.True(t, exitCalled)
 	assert.True(t, mock.restoreCalled)
+}
+
+func TestRunDatabaseRestore_InvalidSecretRef(t *testing.T) {
+	resetVars()
+	mock := &mockEngine{}
+	engine.RegisterEngine(mock)
+
+	engineName = "mock"
+	backupName = "test-backup"
+	databaseName = "test-db"
+	serviceName = "test-svc"
+	secretRefs = []string{"INVALID_FORMAT"}
+
+	exitCalled := false
+	osExit = func(code int) {
+		exitCalled = true
+	}
+	defer func() { osExit = os.Exit }()
+
+	err := runDatabaseRestore()
+	assert.NoError(t, err)
+
+	assert.True(t, exitCalled)
 }
