@@ -5,9 +5,9 @@ import (
 	"os"
 	"time"
 
-	"github.com/wiremind/kubectl-restore/pkg/job"
-	"github.com/wiremind/kubectl-restore/pkg/k8screds"
-	"github.com/wiremind/kubectl-restore/pkg/logger"
+	"github.com/wiremind/kubectl-db-restore/pkg/job"
+	"github.com/wiremind/kubectl-db-restore/pkg/k8screds"
+	"github.com/wiremind/kubectl-db-restore/pkg/logger"
 	"k8s.io/cli-runtime/pkg/genericclioptions"
 )
 

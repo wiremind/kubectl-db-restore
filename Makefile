@@ -7,7 +7,7 @@ test:
 
 .PHONY: bin
 bin: fmt vet
-	go build -o bin/kubectl-restore github.com/wiremind/kubectl-restore/cmd/plugin
+	go build -o bin/kubectl-db-restore github.com/wiremind/kubectl-db-restore/cmd/plugin
 
 .PHONY: fmt
 fmt:

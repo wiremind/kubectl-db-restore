@@ -3,7 +3,7 @@ package engine
 import (
 	"fmt"
 
-	"github.com/wiremind/kubectl-restore/pkg/k8screds"
+	"github.com/wiremind/kubectl-db-restore/pkg/k8screds"
 	"k8s.io/cli-runtime/pkg/genericclioptions"
 )
 

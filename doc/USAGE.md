@@ -1,18 +1,18 @@
-# Usage Guide: kubectl-restore
+# Usage Guide: kubectl-db-restore
 
-This document covers how to use the `kubectl restore` plugin effectively within your Kubernetes environments
+This document covers how to use the `kubectl db-restore` plugin effectively within your Kubernetes environments
 
 ## Usage
 The following assumes you have the plugin installed via
 
 ```shell
-kubectl krew install kubectl-restore
+kubectl krew install kubectl-db-restore
 ```
 
 ## ⚙️ Command Overview
 
 ```
-kubectl restore database [flags]
+kubectl db-restore database [flags]
 ```
 
 This command launches a Kubernetes Job that runs a database restore process. It is currently available for ClickHouse, with support for other engines planned.
@@ -34,7 +34,7 @@ Flag	Description
 🧾 Example
 
 ```
-kubectl restore database \
+kubectl db-restore database \
   --engine clickhouse \
   --backup-name my-daily-backup \
   --database example_db \
@@ -44,7 +44,7 @@ kubectl restore database \
 To simulate the job without actually running it:
 
 ```
-kubectl restore database ... --dry-run
+kubectl db-restore database ... --dry-run
 ```
 
 ### 🧠 Job Lifecycle & Monitoring
@@ -75,4 +75,4 @@ Job failed unexpectedly: Use --dry-run to debug the restore SQL.
 Job not created: Make sure you have sufficient RBAC permissions to create Jobs in the namespace.
 
 ## 👥 Community & Support
-File issues and discuss improvements via GitHub: wiremind/kubectl-restore
+File issues and discuss improvements via GitHub: wiremind/kubectl-db-restore

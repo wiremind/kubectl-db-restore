@@ -5,8 +5,8 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	"github.com/wiremind/kubectl-restore/pkg/engine"
-	"github.com/wiremind/kubectl-restore/pkg/k8screds"
+	"github.com/wiremind/kubectl-db-restore/pkg/engine"
+	"github.com/wiremind/kubectl-db-restore/pkg/k8screds"
 	"k8s.io/cli-runtime/pkg/genericclioptions"
 )
 

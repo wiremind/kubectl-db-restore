@@ -1,6 +1,6 @@
-# kubectl-restore
+# kubectl-db-restore
 
-`kubectl-restore` is a [Krew](https://krew.sigs.k8s.io/) plugin for restoring databases running in Kubernetes, directly from your terminal using `kubectl`.
+`kubectl-db-restore` is a [Krew](https://krew.sigs.k8s.io/) plugin for restoring databases running in Kubernetes, directly from your terminal using `kubectl`.
 
 This plugin supports cloud-native database restoration workflows via Kubernetes Jobs. It is designed to be engine-extensible (currently supports ClickHouse and a placeholder for PostgreSQL) and integrates seamlessly into Kubernetes-native workflows.
 
@@ -28,7 +28,7 @@ kubectl krew install restore
 Then invoke the plugin using:
 
 ```
-kubectl restore
+kubectl db-restore
 ```
 
 ---
@@ -43,7 +43,7 @@ PostgreSQL	⚠️ Not yet implemented
 ```
 export CLICKHOUSE_AWS_S3_ENDPOINT_URL_BACKUP="https://backup-name.s3.region-name.amazonaws.com"
 
-kubectl restore database \
+kubectl db-restore database \
   --engine clickhouse \
   --backup-name daily-backup-2025-06-16 \
   --database my_db \
@@ -62,7 +62,7 @@ These credentials are used to formulate the restore SQL and run it via clickhous
 You can preview the generated SQL without actually executing it by passing the --dry-run flag:
 
 ```
-kubectl restore database \
+kubectl db-restore database \
   --dry-run \
   --engine clickhouse ...
 ```

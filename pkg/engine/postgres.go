@@ -1,7 +1,7 @@
 package engine
 
 import (
-	"github.com/wiremind/kubectl-restore/pkg/logger"
+	"github.com/wiremind/kubectl-db-restore/pkg/logger"
 	"k8s.io/cli-runtime/pkg/genericclioptions"
 )
 

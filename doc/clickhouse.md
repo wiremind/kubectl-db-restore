@@ -1,6 +1,6 @@
-# 📚 ClickHouse Guide for `kubectl-restore`
+# 📚 ClickHouse Guide for `kubectl-db-restore`
 
-This guide explains how to restore ClickHouse databases using the `kubectl restore` plugin.
+This guide explains how to restore ClickHouse databases using the `kubectl db-restore` plugin.
 
 ---
 
@@ -29,7 +29,7 @@ The following **must be defined** either via environment variables **or** via `-
 ### Via `--secret-ref` Example
 
 ```
-kubectl restore database \
+kubectl db-restore database \
   --engine clickhouse \
   --backup-name my-daily-backup \
   --database example_db \
@@ -47,7 +47,7 @@ kubectl restore database \
 To preview the SQL that would be executed:
 
 ```
-kubectl restore database ... --dry-run
+kubectl db-restore database ... --dry-run
 ```
 This logs the SQL restore process without creating a Job.
 
